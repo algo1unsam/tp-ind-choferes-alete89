@@ -1,0 +1,178 @@
+import choferes.*
+import clientes.*
+import oficina.*
+
+describe "para un viaje de 10 kilometros" {
+
+	const kilometros = 10
+
+	test "Si Roxana lleva a Ludmila el viaje sale 180 pesos" {
+		assert.equals(180, roxana.precioViaje(ludmila, kilometros))
+	}
+
+	test "Si Roxana lleva a Ana Maria el viaje sale 300 pesos" {
+		assert.equals(300, roxana.precioViaje(anaMaria, kilometros))
+	}
+
+	test "Si Roxana lleva a Teresa el viaje sale 220 pesos" {
+		assert.equals(220, roxana.precioViaje(teresa, kilometros))
+	}
+
+	test "Si Gabriela lleva a Ludmila el viaje sale 216 pesos" {
+		assert.equals(216, gabriela.precioViaje(ludmila, kilometros))
+	}
+
+	test "Si Gabriela lleva a Ana Maria el viaje sale 360 pesos" {
+		assert.equals(360, gabriela.precioViaje(anaMaria, kilometros))
+	}
+
+	test "Si Gabriela lleva a Teresa el viaje sale 264 pesos" {
+		assert.equals(264, gabriela.precioViaje(teresa, kilometros))
+	}
+
+	test "Si Mariela lleva a Ludmila el viaje sale 180 pesos" {
+		assert.equals(180, mariela.precioViaje(ludmila, kilometros))
+	}
+
+	test "Si Mariela lleva a Ana Maria el viaje sale 300 pesos" {
+		assert.equals(300, mariela.precioViaje(anaMaria, kilometros))
+	}
+
+	test "Si Mariela lleva a Teresa el viaje sale 220 pesos" {
+		assert.equals(220, mariela.precioViaje(teresa, kilometros))
+	}
+
+	test "Si Juana lleva a Ludmila el viaje sale 200 pesos" {
+		assert.equals(200, juana.precioViaje(ludmila, kilometros))
+	}
+
+	test "Si Juana lleva a Ana Maria el viaje sale 200 pesos" {
+		assert.equals(200, juana.precioViaje(anaMaria, kilometros))
+	}
+
+	test "Si Juana lleva a Teresa el viaje sale 200 pesos" {
+		assert.equals(200, juana.precioViaje(teresa, kilometros))
+	}
+
+}
+
+describe "para un viaje de 2 kilometros" {
+
+	const kilometros = 2
+
+	test "Si Roxana lleva a Ludmila el viaje sale 36 pesos" {
+		assert.equals(36, roxana.precioViaje(ludmila, kilometros))
+	}
+
+	test "Si Roxana lleva a Ana Maria el viaje sale 60 pesos" {
+		assert.equals(60, roxana.precioViaje(anaMaria, kilometros))
+	}
+
+	test "Si Roxana lleva a Teresa el viaje sale 44 pesos" {
+		assert.equals(44, roxana.precioViaje(teresa, kilometros))
+	}
+
+	test "Si Gabriela lleva a Ludmila el viaje sale 43.2 pesos" {
+		assert.equals(43.2, gabriela.precioViaje(ludmila, kilometros))
+	}
+
+	test "Si Gabriela lleva a Ana Maria el viaje sale 72 pesos" {
+		assert.equals(72, gabriela.precioViaje(anaMaria, kilometros))
+	}
+
+	test "Si Gabriela lleva a Teresa el viaje sale 52.8 pesos" {
+		assert.equals(52.8, gabriela.precioViaje(teresa, kilometros))
+	}
+
+	test "Si Mariela lleva a Ludmila el viaje sale 50 pesos" {
+		assert.equals(50, mariela.precioViaje(ludmila, kilometros))
+	}
+
+	test "Si Mariela lleva a Ana Maria el viaje sale 60 pesos" {
+		assert.equals(60, mariela.precioViaje(anaMaria, kilometros))
+	}
+
+	test "Si Mariela lleva a Teresa el viaje sale 50 pesos" {
+		assert.equals(50, mariela.precioViaje(teresa, kilometros))
+	}
+
+	test "Si Juana lleva a Ludmila el viaje sale 100 pesos" {
+		assert.equals(100, juana.precioViaje(ludmila, kilometros))
+	}
+
+	test "Si Juana lleva a Ana Maria el viaje sale 100 pesos" {
+		assert.equals(100, juana.precioViaje(anaMaria, kilometros))
+	}
+
+	test "Si Juana lleva a Teresa el viaje sale 100 pesos" {
+		assert.equals(100, juana.precioViaje(teresa, kilometros))
+	}
+
+}
+
+describe "Si Lucia reemplaza a Mariela y Melina trabaja para Ana Maria" {
+
+	method initialize() {
+		lucia.reemplaza(mariela)
+		melina.trabajaPara(anaMaria)
+	}
+
+	test "por un viaje de 10km Lucía le cobra a Melina 270 pesos" {
+		assert.equals(270, lucia.precioViaje(melina, 10))
+	}
+
+	test "por un viaje de 1km Lucía le cobra a Melina 50 pesos" {
+		assert.equals(50, lucia.precioViaje(melina, 1))
+	}
+
+}
+
+describe "Si Lucia reemplaza a Gabriela y Melina trabaja para Ana Maria" {
+
+	method initialize() {
+		lucia.reemplaza(gabriela)
+		melina.trabajaPara(anaMaria)
+	}
+
+	test "por un viaje de 10km Lucía le cobra a Melina 324 pesos" {
+		assert.equals(324, lucia.precioViaje(melina, 10))
+	}
+
+	test "por un viaje de 1km Lucía le cobra a Melina 32.4 pesos" {
+		assert.equals(32.4, lucia.precioViaje(melina, 1))
+	}
+
+}
+
+describe "Si el chofer de primera opcion es Roxana y de segunda Juana" {
+
+	method initialize() {
+		oficina.asignarChoferes(roxana, juana)
+	}
+
+	test "por un viaje de 10km para Ana Maria, se asigna a Juana por ser más de 30 pesos más barato" {
+		const kilometros = 10
+		assert.equals(juana, oficina.choferElegidoParaViaje(anaMaria, kilometros))
+		assert.equals(200, juana.precioViaje(anaMaria, kilometros))
+		assert.equals(300, roxana.precioViaje(anaMaria, kilometros))
+		assert.that(roxana.precioViaje(anaMaria, kilometros) - 30 > juana.precioViaje(anaMaria, kilometros))
+	}
+
+	test "por un viaje de 10km para Teresa, se asigna a Roxana aunque sea más cara, porque la diferencia es menor a 30" {
+		const kilometros = 10
+		assert.equals(roxana, oficina.choferElegidoParaViaje(teresa, kilometros))
+		assert.equals(200, juana.precioViaje(teresa, kilometros))
+		assert.equals(220, roxana.precioViaje(teresa, kilometros))
+		assert.notThat(juana.precioViaje(teresa, kilometros) - 30 > roxana.precioViaje(teresa, kilometros))
+	}
+
+	test "por un viaje de 4km para Teresa, se asigna a Roxana aunque sea más cara, porque la diferencia es menor a 30" {
+		const kilometros = 4
+		assert.equals(roxana, oficina.choferElegidoParaViaje(teresa, kilometros))
+		assert.equals(100, juana.precioViaje(teresa, kilometros))
+		assert.equals(88, roxana.precioViaje(teresa, kilometros))
+		assert.notThat(juana.precioViaje(teresa, kilometros) - 30 > roxana.precioViaje(teresa, kilometros))
+	}
+
+}
+
